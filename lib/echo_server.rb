@@ -1,20 +1,18 @@
 require 'socket'
 
-host = 'localhost'
-port = '5000'
-
 class EchoServer
-    @server = null
+    attr_reader :server
+
+    def initialize(port)
+        @port = port
+        @server = nil
+    end
 
     def start()
-        @server = TCPServer.open(host, port)
-    end
-
-    def open_server_connection()
-        
-    end
-
-    def disconnect()
-        @server.close()
+        @server = TCPServer.open(@port)
+        puts "Server is running on port #{@port}"
     end
 end
+
+# server = EchoServer.new(3001)
+# server.start

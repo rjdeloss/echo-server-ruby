@@ -1,16 +1,19 @@
-require "echo_server"
+require 'echo_server'
 
 describe EchoServer do
 
-    describe ".test" do
-        it "basic test for Ruby CI" do 
+    describe '.test' do
+        it 'basic test for Ruby CI' do 
             expect(true).to eq(true)
         end
     end
 
-    describe ".start" do
-        it "should open a server connection" do
+    describe 'start method' do
+      it 'should create an instance of a server' do
+        echo_server = EchoServer.new(3001)
 
+        expect{echo_server.start}.to output("Server is running on port 3001\n").to_stdout
+        expect(echo_server.server).not_to be_nil
         end
     end
 end
