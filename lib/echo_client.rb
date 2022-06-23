@@ -1,6 +1,6 @@
 require 'socket'
 
-class Client
+class EchoClient
     attr_reader :server_socket, :is_socket_open
 
     def initialize(host_name, port)
