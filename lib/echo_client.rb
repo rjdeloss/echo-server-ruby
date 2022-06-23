@@ -29,6 +29,3 @@ class Client
         @server_socket.close
     end
 end
-
-client = Client.new('localhost', 3001)
-client.start

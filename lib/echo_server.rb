@@ -24,6 +24,3 @@ class EchoServer
         end
     end
 end
-
-server = EchoServer.new(3001)
-server.start
