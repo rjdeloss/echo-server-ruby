@@ -9,6 +9,12 @@ describe EchoServer do
     end
 
     describe 'Server Class' do
+        it 'should create an instance of a server' do
+            echo_server = EchoServer.new(3001)
+
+            expect(echo_server.is_server_open).to be(false)
+        end
+
         it 'should open a server connection' do
             echo_server = EchoServer.new(3001)
 
