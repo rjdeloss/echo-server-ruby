@@ -1,6 +1,8 @@
 require 'socket'
 
 class Client
+    attr_reader :server_socket, :is_socket_open
+
     def initialize(host_name, port)
         @host_name = host_name
         @port = port
@@ -22,8 +24,6 @@ class Client
         disconnect
     end
 
-    private 
-    
     def open_server_socket
         @server_socket = TCPSocket.open(@host_name, @port)
         puts "Socket is connected to server"
@@ -34,3 +34,5 @@ class Client
         @server_socket.close
     end
 end
+
+# Errno::ECONNREFUSED

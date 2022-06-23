@@ -8,12 +8,18 @@ describe EchoServer do
         end
     end
 
-    describe 'start method' do
-      it 'should create an instance of a server' do
-        echo_server = EchoServer.new(3001)
+    describe 'Server Class' do
+        it 'should open a server connection' do
+            echo_server = EchoServer.new(3001)
 
-        expect{echo_server.start}.to output("Server is running on port 3001\n").to_stdout
-        expect(echo_server.server).not_to be_nil
+            expect{echo_server.open_server_connection}.to output("Server is running on port 3001\n").to_stdout
+            expect(echo_server.server).not_to be_nil
+        end
+        
+        it 'should raise an exception if it opens a server on the wrong port' do
+            echo_server = EchoServer.new(-1)
+            
+            expect{echo_server.open_server_connection}.to raise_exception
         end
     end
 end
