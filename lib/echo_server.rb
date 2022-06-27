@@ -1,4 +1,5 @@
 require 'socket'
+require_relative 'echo_response'
 
 class EchoServer
     attr_reader :server, :is_server_open
@@ -23,7 +24,8 @@ class EchoServer
     def client_handler(incoming_connection) 
         Thread.new(incoming_connection) do |connected|
             puts "#{format_connection_info(connected)} is connected"
-            echo_the_client(connected)
+            EchoResponse.new(connected).echo_the_message
+            disconnect(connected)
         end
     end
 
@@ -36,21 +38,6 @@ class EchoServer
         end
     end
 
-    def echo_the_client(connection)
-        begin
-            loop do
-                message = connection.readline
-                break if message.include?('.exit')
-                puts "Client says: #{message}"
-                connection.puts(message)
-            end
-        rescue EOFError
-            disconnect(connection)
-        end
-
-        disconnect(connection)
-    end
-
     def format_connection_info(connection)
         port, host = connection.peeraddr[1,2]
         "#{host}:#{port}"
@@ -61,5 +48,3 @@ class EchoServer
         connection.close
     end
 end
-
-# SocketError
