@@ -1,4 +1,5 @@
 require 'echo_response'
+require 'client_mock'
 
 describe EchoResponse do
 
@@ -26,23 +27,5 @@ describe EchoResponse do
             expect(mock_connection.output).to eq('')
         end
 
-    end
-end
-
-class ClientMock
-    attr_reader :readline, :output
-
-    def initialize(input_array)
-        @messages = input_array
-        @message = ''
-        @output = ''
-    end
-
-    def readline
-        @messages.shift
-    end
-
-    def puts(message)
-        @output = message
     end
 end
