@@ -8,6 +8,7 @@ class EchoServer
         @port = port
         @server = nil
         @is_server_open = false
+        @is_connected = false
     end
 
     def start
@@ -23,8 +24,11 @@ class EchoServer
 
     def client_handler(incoming_connection) 
         Thread.new(incoming_connection) do |connected|
+            @is_connected = true
             puts "#{format_connection_info(connected)} is connected"
-            EchoResponse.new(connected).echo_the_message
+
+            EchoResponse.new(connected, @is_connected).echo_the_message
+            
             disconnect(connected)
         end
     end
@@ -44,6 +48,7 @@ class EchoServer
     end
 
     def disconnect(connection)
+        @is_connected = false
         puts "#{format_connection_info(connection)} has disconnected"
         connection.close
     end

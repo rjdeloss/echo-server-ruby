@@ -12,6 +12,7 @@ describe EchoServer do
             echo_server = EchoServer.new(3001)
 
             expect{echo_server.open_server_connection}.to output("Server is listening on port 3001\n").to_stdout
+            expect(echo_server.is_server_open).to be(true)
             expect(echo_server.server).not_to be_nil
         end
         
