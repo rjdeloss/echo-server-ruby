@@ -1,4 +1,6 @@
 require 'echo_server'
+require 'client_mock'
+require 'server_mock'
 
 describe EchoServer do
     describe 'Server Class' do
@@ -20,6 +22,30 @@ describe EchoServer do
             echo_server = EchoServer.new(-1)
             
             expect{echo_server.open_server_connection}.to raise_exception(SocketError)
+        end
+
+        it 'should say client is connected when a client has connected' do 
+            mock_connection = ClientMock.new(['.exit'])
+            mock_server = MockServer.new(3001, mock_connection)
+
+
+            expect{mock_server.client_handler(mock_connection)}.to output("client is connected\nclient has disconnected\n").to_stdout
+        end
+
+        it 'should display the message from the client' do
+            mock_connection = ClientMock.new(['crator','.exit'])
+            mock_server = MockServer.new(3001, mock_connection)
+
+
+            expect{mock_server.client_handler(mock_connection)}.to output("client is connected\nClient says: crator\nclient has disconnected\n").to_stdout
+        end
+
+        it 'should say client has disconnected when a client has disconnected' do
+            mock_connection = ClientMock.new(['.exit'])
+            mock_server = MockServer.new(3001, mock_connection)
+
+
+            expect{mock_server.client_handler(mock_connection)}.to output("client is connected\nclient has disconnected\n").to_stdout
         end
     end
 end
