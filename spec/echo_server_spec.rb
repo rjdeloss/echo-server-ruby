@@ -5,13 +5,6 @@ require 'server_mock'
 
 describe EchoServer do
     describe 'Server Class' do
-        it 'should create an instance of a server' do
-            server_socket = ServerSocket.new(3001)
-            echo_server = EchoServer.new(server_socket)
-
-            expect(echo_server.is_server_open).to be(false)
-        end
-
         it 'should open a server connection' do
             server_socket = ServerSocket.new(3001)
             echo_server = EchoServer.new(server_socket)
@@ -25,6 +18,15 @@ describe EchoServer do
             server_socket = ServerSocket.new(-1)
             echo_server = EchoServer.new(server_socket)           
             expect{echo_server.open_server_connection}.to raise_exception(SocketError)
+        end
+        
+        it 'should disconnect server_socket when server socket is called' do 
+            server_socket = ServerSocket.new(3001)
+            echo_server = EchoServer.new(server_socket) 
+            echo_server.disconnect_socket
+
+            expect(echo_server.is_server_open).to be(false)
+            expect(echo_server.server).to be_nil
         end
 
         it 'should say client is connected when a client has connected' do 

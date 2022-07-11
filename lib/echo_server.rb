@@ -4,7 +4,7 @@ require_relative 'echo_response'
 
 
 class EchoServer
-    attr_reader :server, :is_server_open
+    attr_reader :server, :is_server_open, :disconnect
 
     def initialize(server_socket)
         @server = nil
@@ -33,6 +33,11 @@ class EchoServer
 
             disconnect(connected)
         end
+    end
+
+    def disconnect_socket
+        @is_server_open = false
+        @server = nil
     end
 
     private

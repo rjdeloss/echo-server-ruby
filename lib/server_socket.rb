@@ -11,8 +11,4 @@ class ServerSocket
     def open
         @server_socket.open(@port)
     end
-
-    def close
-        @server_socket.close
-    end
 end
