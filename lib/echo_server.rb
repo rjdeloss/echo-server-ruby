@@ -1,12 +1,14 @@
 require 'socket'
+require_relative 'server'
 require_relative 'echo_response'
+
 
 class EchoServer
     attr_reader :server, :is_server_open
 
-    def initialize(port)
-        @port = port
+    def initialize(server_socket)
         @server = nil
+        @server_socket = server_socket
         @is_server_open = false
         @is_connected = false
     end
@@ -17,9 +19,9 @@ class EchoServer
     end
 
     def open_server_connection
-        @server = TCPServer.open(@port)
+        @server = @server_socket.open
         @is_server_open = true
-        puts "Server is listening on port #{@port}"
+        puts "Server is listening on port #{@server_socket.port}"
     end
 
     def client_handler(incoming_connection) 
@@ -28,12 +30,13 @@ class EchoServer
             puts "#{format_connection_info(connected)} is connected"
 
             EchoResponse.new(connected, @is_connected).echo_the_message
-            
+
             disconnect(connected)
         end
     end
 
     private
+
 
     def accept_incoming_connections
         while @is_server_open
