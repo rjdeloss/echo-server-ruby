@@ -1,3 +1,4 @@
+require 'server_socket'
 require 'echo_server'
 require 'client_mock'
 require 'server_mock'
@@ -5,13 +6,15 @@ require 'server_mock'
 describe EchoServer do
     describe 'Server Class' do
         it 'should create an instance of a server' do
-            echo_server = EchoServer.new(3001)
+            server_socket = ServerSocket.new(3001)
+            echo_server = EchoServer.new(server_socket)
 
             expect(echo_server.is_server_open).to be(false)
         end
 
         it 'should open a server connection' do
-            echo_server = EchoServer.new(3001)
+            server_socket = ServerSocket.new(3001)
+            echo_server = EchoServer.new(server_socket)
 
             expect{echo_server.open_server_connection}.to output("Server is listening on port 3001\n").to_stdout
             expect(echo_server.is_server_open).to be(true)
@@ -19,8 +22,8 @@ describe EchoServer do
         end
         
         it 'should raise an exception if it opens a server on the wrong port' do
-            echo_server = EchoServer.new(-1)
-            
+            server_socket = ServerSocket.new(-1)
+            echo_server = EchoServer.new(server_socket)           
             expect{echo_server.open_server_connection}.to raise_exception(SocketError)
         end
 

@@ -1,5 +1,5 @@
 require 'socket'
-require_relative 'server'
+require_relative 'server_socket'
 require_relative 'echo_response'
 
 
