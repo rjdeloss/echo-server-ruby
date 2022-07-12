@@ -1,5 +1,5 @@
 class EchoResponse
-    attr_reader :message
+    attr_reader :message, :is_connected
     
     def initialize(connection, is_connected=true)
         @connection = connection

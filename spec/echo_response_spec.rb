@@ -18,6 +18,14 @@ describe EchoResponse do
 
             expect(mock_connection.output).to eq('bacon')
         end
+        
+        it 'should disconnect client when .exit is sent as a message' do
+            mock_connection = ClientMock.new(['.exit'])
+            echo_response = EchoResponse.new(mock_connection, true)
+            echo_response.echo_the_message
+
+            expect(echo_response.is_connected).to be(false)
+        end
 
         it 'should take no action when not connected' do
             mock_connection = ClientMock.new(['strawberry', 'hello', 'world', '.exit'])

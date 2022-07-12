@@ -4,7 +4,7 @@ require 'client_mock'
 require 'server_mock'
 
 describe EchoServer do
-    describe 'Server Class' do
+    describe 'Echo Server Class' do
         it 'should open a server connection' do
             server_socket = ServerSocket.new(3001)
             echo_server = EchoServer.new(server_socket)
